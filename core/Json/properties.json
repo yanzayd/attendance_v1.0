@@ -1,0 +1,35 @@
+               {
+"properties":[
+	{ "software-author":{
+			"author-name":"Ezechiel Kalengya Ezpk",
+			"author-email":"ezechielkalengya@gmail.com"
+	}},
+	{	"software-lang":{
+			"lang":"eng-lang"
+	}},
+	{	"software-name":{
+				"fr-lang":  "Solglobal Software",
+				"eng-lang": "Solglobal Software"
+	}},
+	{	"software-short-name":{
+				"fr-lang":  "Solglobal",
+				"eng-lang": "Solglobal"
+	}},
+
+
+	{	"dashboard":{
+				"fr-lang":  "Accueil",
+				"eng-lang": "Dashboard"
+	}},
+	{	"admin":{
+				"fr-lang":  "Administrateurs",
+				"eng-lang": "Administrators"
+	}},
+
+	{	"footer-string":{
+				"fr-lang": "@Copyright 2020. Project MIS ~  Powered by Company LTD",
+				"eng-lang": "@Copyright 2020. Project MIS ~ Powered by Company LTD"
+	}}
+
+
+]}
