@@ -24,13 +24,16 @@ RewriteCond %{REQUEST_FILENAME} !-d
 #-----------------------------------------------#
  RewriteRule ^new/class(/*)$ index.php?request=new_class
  RewriteRule ^list/class(/*)$ index.php?request=list_class
- RewriteRule ^list/class/([a-zA-Z]+)(/*)$ index.php?request=list_class&reportYear=$1
+ RewriteRule ^edit/class/([0-9]+)(/*)$ index.php?request=edit_class&_id=$1
 
 #-----------------------------------------------#
 # student
 #-----------------------------------------------#
  RewriteRule ^new/student(/*)$ index.php?request=new_student
  RewriteRule ^list/student(/*)$ index.php?request=list_student
+ RewriteRule ^edit/student/([0-9]+)(/*)$ index.php?request=edit_student&_id=$1
+ RewriteRule ^profile/student/([0-9]+)(/*)$ index.php?request=profile_student&_id=$1
+
 
 #-----------------------------------------------#
 # Teacher

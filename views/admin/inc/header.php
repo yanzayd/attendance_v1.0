@@ -24,9 +24,12 @@
   <!-- ----START----- USER GRID I LIST -->
 	<link rel="stylesheet" href="<?=DN?>/assets/vendors/styles/style.css">
 <link rel="stylesheet" href="<?=DN?>https://fonts.googleapis.com/icon?family=Material+Icons">
+<!-- Sweet Alert-->
+        <link href="<?=DN?>/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 	<!-- END OF USER GRID LIST -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async <?=DN?>/assets/src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}

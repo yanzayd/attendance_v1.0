@@ -33,9 +33,9 @@
 							<div class="col-md-4 col-sm-12">
 								<label>Gender</label>
 									<select id="gender" name="gender" class="custom-select col-12">
-										<option selected="">Choose your gender</option>
-										<option value="1">Male</option>
-										<option value="2">Female</option>
+										<option selected=""hidden>[Choose your gender]</option>
+										<option value="Male">Male</option>
+										<option value="Female">Female</option>
 									</select>
               </div>
               <div class="col-md-4 col-sm-12">
@@ -47,10 +47,10 @@
 							<div class="col-md-4 col-sm-12">
 								<label>Qualification</label>
 									<select id="qualification" name="qualification" class="custom-select col-12">
-										<option selected="">Choose your qualification</option>
-										<option value="1">PHD</option>
-										<option value="2">Master</option>
-										<option value="2">Licence</option>
+										<option selected="" hidden>[Choose your qualification]</option>
+										<option value="PHD">PHD</option>
+										<option value="Master">Master</option>
+										<option value="Licence">Licence</option>
 									</select>
               </div>
             </div>
@@ -74,6 +74,14 @@
                 </div>
               </div>
             </div>
+						<div class="row">
+							<div class="col-md-4 col-sm-12">
+								<div class="form-group">
+									<label>Telephone</label>
+									<input id="telephone" name="telephone" type="text" class="form-control">
+								</div>
+							</div>
+						</div>
 						<button type="reset" class="btn btn-secondary waves-effect">Cancel</button>
 						<button type="button" style="Background: #2A3F54" class="btn btn-success SubmitRegister">Register</button>
 					</form>

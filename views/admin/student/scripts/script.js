@@ -46,44 +46,97 @@ $(function(){
         success: function(dataResponse){
           var response = JSON.parse(dataResponse);
           if(response.status == 1){
-            alert("DATA SUCCESSFULLY INSERTED!");
             $('form#simpleForm').trigger("reset");
             $('form#simpleForm select').trigger("change");
-            $('.summernote1').summernote('reset');
-            // Swal.fire({
-            //   title:"Notification Success!",
-            //   text: response.message,
-            //   type:"success",
-            //   showCancelButton:!0,
-            //   confirmButtonColor:"#556ee6",
-            //   cancelButtonColor:"#f46a6a"
-            // });
-
+            Swal.fire({
+              title:"Notification Success!",
+              text: response.message,
+              type:"success",
+              showCancelButton:!0,
+              confirmButtonColor:"#218838",
+              cancelButtonColor:"#dc3545"
+            });
           }
           else{
-            // Swal.fire({
-            //   title:"Notification Error!",
-            //   text: response.message,
-            //   type:"error",
-            //   showCancelButton:!0,
-            //   confirmButtonColor:"#556ee6",
-            //   cancelButtonColor:"#f46a6a"
-            // });
-            alert(response.message);
+            Swal.fire({
+              title:"Notification Error!",
+              text: response.message,
+              type:"error",
+              showCancelButton:!0,
+              confirmButtonColor:"#2A3F54",
+              cancelButtonColor:"#dc3545"
+            });
           }
         }
       });
     }
     else{
-      // Swal.fire({
-      //   title:"Notification Erreur!",
-      //   text:"Nom, Prenom, Genre, E-mail, Adresse et Telephone sont obligatoires!",
-      //   type:"warning",
-      //   showCancelButton:!0,
-      //   confirmButtonColor:"#556ee6",
-      //   cancelButtonColor:"#f46a6a"
-      // });
-      alert("firstname, lastname, email, gender, classes, and responsable_phone are required!")
+      Swal.fire({
+        title:"Notification Erreur!",
+        text:"Nom, Prenom, Genre, E-mail, Adresse et Telephone sont obligatoires!",
+        type:"warning",
+        showCancelButton:!0,
+        confirmButtonColor:"#2A3F54",
+        cancelButtonColor:"#dc3545"
+      });
     }
+  });
+});
+// delete fuction
+$(function(){
+  $('.SubmitDelete').on('click', function(data){
+    var id = $(this).attr('data-arg');
+    if(id!=''){
+    Swal.fire({
+            title:"Etes-vous sur?",
+            text:"Vous voulez supprimmer cette Eleve!",
+            type:"warning",
+            showCancelButton:!0,
+            confirmButtonText:"Oui, Supprimmer!",
+            cancelButtonText:"No, Annuler!",
+            confirmButtonClass:"btn btn-success mt-2",
+            cancelButtonClass:"btn btn-danger ml-2 mt-2",
+            buttonsStyling:!1
+        })
+        .then(function(t){
+          if(t.value){
+            $.ajax({
+              url: hostname,
+              type: "POST",
+              data: {
+                'student-id': id,
+                'webToken': '256',
+                'request': 'student-delete',
+              },
+              cache: false,
+              success: function(dataResponse){
+                var response = JSON.parse(dataResponse);
+                if(response.status == 1){
+                  $('#card-'+id+'').css('background-color', '#ccc');
+                  $('#card-'+id+'').fadeOut('slow');
+                  Swal.fire({
+                    title:"Student Deleted!",
+                    text:response.message,
+                    type:"success"
+                  });
+                }
+                else{
+                  Swal.fire({
+                    title:"Notification Error!",
+                    text: response.message,
+                    type:"error"
+                  });
+                }
+              }
+            });
+          }else{
+            t.dismiss===Swal.DismissReason.cancel&&Swal.fire({
+              title:"Annulee",
+              text:"Vous venez d'annuler cette operation.",
+              type:"error"
+            });
+          }
+        });
+      }
   });
 });

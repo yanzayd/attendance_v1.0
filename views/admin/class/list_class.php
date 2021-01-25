@@ -19,8 +19,10 @@
 									<th>ID</th>
 									<th>Code</th>
 									<th>Name</th>
+									<th>Section</th>
 									<th>Created By</th>
 									<th>Creation Date</th>
+									<th>Action</th>
 
 								</tr>
 							</thead>
@@ -34,13 +36,28 @@ $ClassesTable->select("ORDER BY id ASC");
 	 foreach($ClassesTable->data() As $class_): $count_++;
 		$class_id = $ClassesTable->find($class_->id, 'name');
 ?>
-								<tr >
+								<tr id="<?= Hash::encryptToken($class_->id) ?>">
 									<td><?=$count_?></td>
 									<td><?=$class_->id?></td>
 									<td><?=$class_->code?></td>
 									<td><?=$class_->name?></td>
+									<td><?=$class_->section?></td>
 									<td><?=$class_->registered_by?></td>
 									<td><?=$class_->c_date?></td>
+									<td>
+										<div class="btn-group mr-1 mt-2">
+																										<button class="btn btn-secondary btn-sm" type="button">
+																												Action
+																										</button>
+																										<button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																												<i class="mdi mdi-chevron-down"></i>
+																										</button>
+																										<div class="dropdown-menu">
+																												<a  class="dropdown-item dw dw-eye SubmitDelete"  data-arg="<?= Hash::encryptToken($class_->id) ?>" href="#">Delete</a>
+																												<a  class="dropdown-item dw dw-edit2 SubmitEdit" class="dw dw-edit2"  href="<?=DN?>/edit/class/<?= Hash::encryptToken($class_->id) ?>">Edit</a>
+																										</div>
+																								</div>
+									</td>
 								</tr>
 <?php
 	endforeach;

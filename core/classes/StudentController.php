@@ -224,7 +224,7 @@ class StudentController
 
 			if($diagnoArray[0] == 'NO_ERRORS'):
 				try{
-					$DepenseTable->delete($_ID);
+					$StudentTable->delete($_ID);
 				}catch(Exception $e){
 					$diagnoArray[0] = 'ERRORS_FOUND';
 					$diagnoArray[]	= $e->getMessage();
@@ -251,5 +251,4 @@ class StudentController
 	}
 
 }
-
  ?>

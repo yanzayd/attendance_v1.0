@@ -23,23 +23,23 @@ class Classes
 		}
 	}
 
-	// /**
-	//  * @method generateCode
-	//  * @return String generatedCode
-	//  */
-	// 	public function generateCode(){
-	// 		$data   = $this->_db->query("SELECT id FROM attendance_class ORDER BY id DESC LIMIT 1");
-	// 		$lastID = 0;
-	// 		if($data->count()):
-	// 			$lastID = $data->first()->id;
-	// 		endif;
-	// 		$newID		= $lastID+1;
-	// 		$Str = 'CLS-';
-	// 		// $Str = '2021';
-	// 		$Str.= ($newID>=0 && $newID<10)?'000':($newID<100?'00':($newID<1000?'0':''));
-	// 		$Str.= $newID;
-	// 		return $Str;
-	// 	}
+	/**
+	 * @method generateCode
+	 * @return String generatedCode
+	 */
+		public function generateCode(){
+			$data   = $this->_db->query("SELECT id FROM attendance_class ORDER BY id DESC LIMIT 1");
+			$lastID = 0;
+			if($data->count()):
+				$lastID = $data->first()->id;
+			endif;
+			$newID		= $lastID+1;
+			$Str = 'CLS-';
+			// $Str = '2021';
+			$Str.= ($newID>=0 && $newID<10)?'000':($newID<100?'00':($newID<1000?'0':''));
+			$Str.= $newID;
+			return $Str;
+		}
 
 	/**
 	 * @method insert

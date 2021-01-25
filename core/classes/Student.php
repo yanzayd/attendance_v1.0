@@ -29,7 +29,7 @@ class Student
       endif;
       $newID		= $lastID+1;
       // $Str = 'MSG-';
-      $Str = 'SCH-2020';
+      $Str = 'STD-2021';
       $Str.= ($newID>=0 && $newID<10)?'000':($newID<100?'00':($newID<1000?'0':''));
       $Str.= $newID;
       return $Str;

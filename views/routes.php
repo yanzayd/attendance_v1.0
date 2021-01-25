@@ -17,6 +17,10 @@ if('admin/'==$main_):
       $sub_ = 'class/';
       require($main_.$sub_.'new_class'.PL);
     break;
+    case 'edit_class':
+      $sub_ = 'class/';
+      require($main_.$sub_.'edit_class'.PL);
+    break;
     case 'list_class':
       $sub_ = 'class/';
       require($main_.$sub_.'list_class'.PL);
@@ -24,6 +28,14 @@ if('admin/'==$main_):
     case 'new_student':
       $sub_ = 'student/';
       require($main_.$sub_.'new_student'.PL);
+    break;
+    case 'edit_student':
+      $sub_ = 'student/';
+      require($main_.$sub_.'edit_student'.PL);
+    break;
+    case 'profile_student':
+      $sub_ = 'student/';
+      require($main_.$sub_.'profile_student'.PL);
     break;
     case 'list_student':
       $sub_ = 'student/';

@@ -1,12 +1,12 @@
 <?php
 require '../core/init.php';
 
-// $_POST['student-rollnumber']      = "201810663";
-// $_POST['student-card_id']         = 93213091;
+// $_POST['student-rollnumber']      = "201810763";
+// $_POST['student-card_id']         = 93213089;
 // $_POST['student-firstname']       = "bedel";
 // $_POST['student-lastname']        = 'yan';
 // $_POST['student-surname']         = "bin";
-// $_POST['student-email']           = 'bellly@gmail.com';
+// $_POST['student-email']           = 'becdely@gmail.com';
 // $_POST['student-gender']          = "Male";
 // $_POST['student-address']         = 'Goma';
 // $_POST['student-classes']         = 'Year3CS';
@@ -16,11 +16,11 @@ require '../core/init.php';
 // $_POST['student-fathername']      = 'faustain';
 // $_POST['student-responsable_phone'] = "+250782287842";
 // $_POST['student-religion']          = 'Christian';
-
-// $_POST['teacher-code']            = "2301032";
+//
+// $_POST['teacher-code']            = "280101032";
 // $_POST['teacher-firstname']       = "Yan";
 // $_POST['teacher-lastname']        = 'Zayd';
-// $_POST['teacher-email']           = 'usy@gmail.com';
+// $_POST['teacher-email']           = 'usooy@gmail.com';
 // $_POST['teacher-gender']          = "Male";
 // $_POST['teacher-address']         = 'Bkv';
 // $_POST['teacher-nationality']     = "Congolaise";
@@ -30,9 +30,9 @@ require '../core/init.php';
 // $_POST['teacher-religion']        = "muslim";
 
 
-// $_POST['class-sections']  = "Commercial et gestion";
-// $_POST['class-code']  = "26302";
-// $_POST['class-name']  = "year8";
+// $_POST['class-section']  = "m";
+// $_POST['class-code']  = "999";
+// $_POST['class-id']  = Hash::encryptToken(1);
 //
 // $_POST['webToken'] = 256;
 // $_POST['request']  = 'student-new';
@@ -63,7 +63,7 @@ if(Input::checkInput('request', 'post', 1) && Input::checkInput('webToken', 'pos
     break;
 
     case 'class-update':
-      $form = \ClassesController::update();
+      $form = \ClassesController::updateInformation();
       if($form->ERRORS == false):
         $response['status']  = 1;
         $response['message']  = 'Operation success!';

@@ -10,7 +10,7 @@ if($StudentTable->count()):
   	foreach($StudentTable->data() As $student_):
 		   $student_rollnumber = $StudentTable->find($student_->rollnumber, 'name');
 	?>
-				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30" id="card-<?= Hash::encryptToken($student_->id)?>">
 					<div class="pd-20 card-box height-100-p">
 						<div class="profile-photo">
 							<a href="modal" data-toggle="modal" data-target="#modal" class="edit-avatar"><i class="fa fa-pencil"></i></a>
@@ -23,10 +23,6 @@ if($StudentTable->count()):
 												<img id="image" src="<?=DN?>/assets/vendors/images/photo2.jpg" alt="Picture">
 											</div>
 										</div>
-										<div class="modal-footer">
-											<input type="submit" value="Update" class="btn btn-primary">
-											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -34,13 +30,11 @@ if($StudentTable->count()):
 						<h5 class="text-center h5 mb-0"><?=$student_->firstname.' '.$student_->lastname?></h5>
 						<p class="text-center text-muted font-14"><?=$student_->email?></p>
 						<p class="text-center text-muted font-14"><?=$student_->classes?></p>
-						<p class="text-center text-muted font-14">Address of student</p>
-						<div class="profile-social">
-							<ul class="clearfix">
-							<button type="button" name="view" class="btn btn-info">View</button>
-							<button type="button" name="delete" class="btn btn-danger">Delete</button>
-							<button type="button" name="edit" class="btn btn-success">Edit</button>
-							</ul>
+						<p class="text-center text-muted font-14"><?=$student_->address?></p>
+						<div class="text-center">
+							<button type="button" style="Background: #2A3F54" class="btn btn-success dw dw-eye SubmitEdit" onclick="window.location.href='<?=DN?>/profile/student/<?= Hash::encryptToken($student_->id) ?>';" title="View"></button>
+							<button type="button" style="Background: #218838" class="btn btn-success dw dw-edit2 SubmitEdit" onclick="window.location.href='<?=DN?>/edit/student/<?= Hash::encryptToken($student_->id) ?>';" title="Edit"></button>
+							<button type="button" style="Background: #dc3545" class="btn btn-success dw dw-delete-3 SubmitDelete" data-arg="<?= Hash::encryptToken($student_->id) ?>" title="Delete"></button>
 						</div>
 					</div>
 				</div>

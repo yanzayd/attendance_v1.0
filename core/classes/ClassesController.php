@@ -22,8 +22,8 @@ class ClassesController
 				'name' 			=> 'Name',
 				'required'	=> true
 			),
-			'code' => array(
-				'name' 			=> 'Code of class',
+			'section' => array(
+				'name' 			=> 'section of class',
 				'required'	=> true
 			)
 		));
@@ -34,29 +34,31 @@ class ClassesController
 			$_ADD            = (OBJECT)$_ADD;
 
 			$_name            = $Str->data_in(Str::sanAsName($_ADD->name));
-			$_code            = $Str->data_in($_ADD->code);
+			$_section         = $Str->data_in(Str::sanAsName($_ADD->section));
+			$_code            = $ClassesTable->generateCode();
 
 			$_status 			= 1;
 			$_userID			= Session::get(Config::get('session/session_name'));
 
 			$_fields =array(
-				'name'    			    => $_name,
-				'code'		 				  => $_code,
-				'registered_by'      =>$_userID,
-				'c_date'						=> $_datetime
+				'name'    			   =>  $_name,
+				'section'          =>  $_section,
+				'code'		 				 =>  $_code,
+				'registered_by'    =>  $_userID,
+				'c_date'					 =>  $_datetime,
 			);
 
 			if($diagnoArray[0] == 'NO_ERRORS'):
 				try{
 					$ClassesTable = new \Classes();
-					$ClassesTable->select("WHERE name =? AND code =?", Array($_name, $_code));
+					$ClassesTable->select("WHERE name =? AND section =? ", Array($_name,$_section));
 					if(!$ClassesTable->exists()):
 						$ClassesTable->insert($_fields);
 					else:
 						return (object)[
 							'ERRORS'  			=> true,
 							'SUCCESS' 			=> false,
-							'ERRORS_SCRIPT' => "Impossible d'enregistrer pour la deuxieme fois cette classe!"
+							'ERRORS_SCRIPT' => "Impossible d'enregistrer!! ce nom et section sont deja pris.. ): trouver une autre nom et section pour votre classe!"
 						];
 					endif;
 				}catch(Exception $e){
@@ -110,6 +112,10 @@ class ClassesController
 			'code' => array(
 				'name' 			=> 'Code of class',
 				'required'	=> true
+			),
+			'section' => array(
+				'name' 			=> 'Section',
+				'required'	=> true
 			)
 		));
 		if($validation->passed()):
@@ -119,9 +125,9 @@ class ClassesController
 			$_EDIT 					 = (OBJECT)$_EDIT;
 
 			$_ID 				  = $Str->data_in(Str::sanAsID(Hash::decryptToken($_EDIT->id)));
-			$_code      = $Str->data_in($_EDIT->code);
-			$_name       = $Str->data_in($_EDIT->name);
-			$_dateClasses = $Str->data_in($_EDIT->date_class);
+			$_code        = $Str->data_in($_EDIT->code);
+			$_section     = $Str->data_in($_EDIT->section);
+			$_name        = $Str->data_in($_EDIT->name);
 
 			$_status 			= 1;
 			$_userID			= Session::get(Config::get('session/session_name'));
@@ -129,12 +135,13 @@ class ClassesController
 			$_fields = array(
 				'name' 		   => $_name,
 				'code' 		   => $_code,
+				'section'    =>$_section,
 
 			);
 
 			if($diagnoArray[0] == 'NO_ERRORS'):
 				try{
-					$DepenseTable->update($_fields, $_ID);
+					$ClassesTable->update($_fields, $_ID);
 				}catch(Exception $e){
 					$diagnoArray[0] = 'ERRORS_FOUND';
 					$diagnoArray[]	= $e->getMessage();
@@ -195,7 +202,7 @@ class ClassesController
 
 			if($diagnoArray[0] == 'NO_ERRORS'):
 				try{
-					$DepenseTable->delete($_ID);
+					$ClassesTable->delete($_ID);
 				}catch(Exception $e){
 					$diagnoArray[0] = 'ERRORS_FOUND';
 					$diagnoArray[]	= $e->getMessage();

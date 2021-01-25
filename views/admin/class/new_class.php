@@ -11,10 +11,14 @@
 					<form method="post" id="simpleForm" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-md-4 col-sm-12">
-								<div class="form-group">
-									<label>code </label>
-									<input type="text" id="code" name="code" class="form-control">
-								</div>
+									<label>Section</label>
+									<select id="section" name="class-section" class="custom-select col-12">
+										<option value=""hidden>section</option>
+										<option value="secondaire General">CO</option>
+										<option value="commercial et gestion">CG</option>
+										<option value="biochimie">BIO</option>
+										<option value="humanite pedagogique">HP</option>
+									</select>
 							</div>
 							<div class="col-md-4 col-sm-12">
 								<div class="form-group">

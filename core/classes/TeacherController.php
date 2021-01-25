@@ -18,18 +18,14 @@ class TeacherController
 			endif;
 		endforeach;
 		$validation = $validate->check($_ADD, array(
-			'code'                 => array(
-				'name' 			         => 'Code',
+			'telephone'                 => array(
+				'name' 			         => 'Telephone',
 				'required'	         => true
 			),
-			'firstname'            => array(
-				'name' 			         => 'First name',
+			'email'            => array(
+				'name' 			         => 'Email',
 				'required'	         => true
-			),
-      'lastname'             => array(
-        'name' 			         => 'Last name',
-        'required'	         => true
-      )
+			)
 
 		));
 		if($validation->passed()):
@@ -196,7 +192,7 @@ class TeacherController
 	public static function delete(){
 		$diagnoArray[0]        = 'NO_ERRORS';
 		$validate 			       = new \Validate();
-		$prefix					       = 'student-';
+		$prefix					       = 'teacher-';
 		foreach($_POST as $index => $value):
 			$_array = explode($prefix, $index);
 			if(count($_array)):
@@ -221,7 +217,7 @@ class TeacherController
 
 			if($diagnoArray[0] == 'NO_ERRORS'):
 				try{
-					$DepenseTable->delete($_ID);
+					$TeacherTable->delete($_ID);
 				}catch(Exception $e){
 					$diagnoArray[0] = 'ERRORS_FOUND';
 					$diagnoArray[]	= $e->getMessage();
