@@ -10,10 +10,9 @@
 			foreach($TeacherTable->data() As $teacher_):
 				$teacher_code = $TeacherTable->find($teacher_->code, 'name');
 		 ?>
-				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30" id="card-<?= Hash::encryptToken($teacher_->id)?>">
 					<div class="pd-20 card-box height-100-p">
 						<div class="profile-photo">
-							<a href="modal" data-toggle="modal" data-target="#modal" class="edit-avatar"><i class="fa fa-pencil"></i></a>
 							<img src="<?=DN?>/assets/vendors/images/photo1.jpg" alt="" class="avatar-photo">
 							<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
@@ -35,12 +34,10 @@
 						<p class="text-center text-muted font-14"><?=$teacher_->email?></p>
 						<p class="text-center text-muted font-14"><?=$teacher_->qualification?></p>
 						<p class="text-center text-muted font-14"><?=$teacher_->code?></p>
-						<div class="profile-social">
-							<ul class="clearfix">
-							<button type="button" name="view" class="btn btn-info">View</button>
-							<button type="button" name="delete" class="btn btn-danger">Delete</button>
-							<button type="button" name="edit" class="btn btn-success">Edit</button>
-							</ul>
+						<div class="text-center">
+							<!-- <button type="button" style="Background: #2A3F54" class="btn btn-success dw dw-eye SubmitEdit" onclick="window.location.href='<?=DN?>/profile/teacher/<?= Hash::encryptToken($teacher_->id) ?>';" title="View"></button> -->
+							<button type="button" style="Background: #218838" class="btn btn-success dw dw-edit2 SubmitEdit" onclick="window.location.href='<?=DN?>/edit/teacher/<?= Hash::encryptToken($teacher_->id) ?>';" title="Edit"></button>
+							<button type="button" style="Background: #dc3545" class="btn btn-success dw dw-delete-3 SubmitDelete" data-arg="<?= Hash::encryptToken($teacher_->id) ?>" title="Delete"></button>
 						</div>
 					</div>
 				</div>

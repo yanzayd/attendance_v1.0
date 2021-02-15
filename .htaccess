@@ -19,6 +19,14 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # Index
 #-----------------------------------------------#
  RewriteRule ^dashboard(/*)$ index.php?request=dashboard
+
+ #-----------------------------------------------#
+ # Attendance
+ #-----------------------------------------------#
+  RewriteRule ^attendance(/*)$ index.php?request=attendance
+
+
+
 #-----------------------------------------------#
 # CLASS
 #-----------------------------------------------#

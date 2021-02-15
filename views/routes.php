@@ -13,6 +13,10 @@ if('admin/'==$main_):
       $sub_ = 'home/';
       require($main_.$sub_.'dashboard'.PL);
     break;
+    case 'attendance':
+      $sub_ = 'attendance/';
+      require($main_.$sub_.'attendance'.PL);
+    break;
     case 'new_class':
       $sub_ = 'class/';
       require($main_.$sub_.'new_class'.PL);

@@ -25,8 +25,16 @@ endif;
             <div class="profile-photo">
               <img src="<?=DN?>/assets/vendors/images/photo1.jpg" alt="" class="avatar-photo">
             </div>
+<?
+$UserTypeTable = new \UserType(); // instanciation of the user type
+$UserTypeTable->select("WHERE id=3", array($session_user_data->user_type_id));
+if($UserTypeTable->count()):
+ foreach($UserTypeTable->data() As $user_type):
+  endforeach;
+endif;
+?>
             <h5 class="text-center h5 mb-0"><?=$student_->firstname.' '.$student_->lastname?></h5>
-            <p class="text-center text-muted font-14">user type</p>
+            <p class="text-center text-muted font-14"><?=$user_type->name?></p>
             <div class="profile-info">
               <h5 class="mb-20 h5 text-blue">Student Information</h5>
               <ul>
@@ -77,12 +85,12 @@ endif;
       <div class="pb-20">
         <table id="datatable" class="checkbox-datatable table nowrap">
           <thead>
+
             <tr>
               <th><div class="dt-checkbox">
                   <input type="checkbox" name="select_all" value="1" id="example-select-all">
                   <span class="dt-checkbox-label"></span>
                 </div>
-
               </th>
               <th>#</th>
               <th>Names</th>
@@ -95,6 +103,7 @@ endif;
           </thead>
           <tbody>
             <tr >
+              <td></td>
               <td></td>
               <td></td>
               <td></td>

@@ -1,12 +1,13 @@
 <?php
 require '../core/init.php';
 
-// $_POST['student-rollnumber']      = "201810763";
+
+// $_POST['student-rollnumber']      = "201810764";
 // $_POST['student-card_id']         = 93213089;
-// $_POST['student-firstname']       = "bedel";
-// $_POST['student-lastname']        = 'yan';
+// $_POST['student-firstname']       = "ben";
+// $_POST['student-lastname']        = 'jamin';
 // $_POST['student-surname']         = "bin";
-// $_POST['student-email']           = 'becdely@gmail.com';
+// $_POST['student-email']           = 'muthamubenjamin@gmail.com';
 // $_POST['student-gender']          = "Male";
 // $_POST['student-address']         = 'Goma';
 // $_POST['student-classes']         = 'Year3CS';
@@ -92,6 +93,17 @@ if(Input::checkInput('request', 'post', 1) && Input::checkInput('webToken', 'pos
       else:
         $response['status']   = 0;
         $response['message']  = $form->ERRORS_SCRIPT;
+      endif;
+    break;
+
+    case 'teacher-delete':
+      $form = \TeacherController::delete();
+      if($form->ERRORS == false):
+        $response['status']  = 1;
+        $response['message']  = 'Operation success!';
+      else:
+        $response['status']  = 0;
+        $response['message'] = $form->ERRORS_SCRIPT;
       endif;
     break;
 

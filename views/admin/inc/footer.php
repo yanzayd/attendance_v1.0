@@ -1,6 +1,6 @@
 <div class="main-container">
   <div class="pd-ltr-20">
-    <div class="footer-wrap pd-20 mb-20 card-box">
+    <div class="footer-wrap pd-10 mb-10 card-box">
       © <script>document.write(new Date().getFullYear())</script> ATTENDANCE MIS By <a href="https://www.attendance.co" target="_blank"> Bedel nyz Indusries </a>
     </div>
   </div>

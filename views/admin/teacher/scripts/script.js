@@ -82,7 +82,7 @@ $(function(){
     if(id!=''){
     Swal.fire({
             title:"Etes-vous sur?",
-            text:"Vous voulez supprimmer cette Eleve!",
+            text:"Vous voulez supprimmer cette Enseignant!",
             type:"warning",
             showCancelButton:!0,
             confirmButtonText:"Oui, Supprimmer!",
@@ -97,7 +97,7 @@ $(function(){
               url: hostname,
               type: "POST",
               data: {
-                'student-id': id,
+                'teacher-id': id,
                 'webToken': '256',
                 'request': 'teacher-delete',
               },
@@ -108,7 +108,7 @@ $(function(){
                   $('#card-'+id+'').css('background-color', '#ccc');
                   $('#card-'+id+'').fadeOut('slow');
                   Swal.fire({
-                    title:"Student Deleted!",
+                    title:"Teacher Deleted!",
                     text:response.message,
                     type:"success"
                   });

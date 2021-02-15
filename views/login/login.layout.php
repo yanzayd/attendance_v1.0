@@ -40,7 +40,7 @@
 			</div>
 			<div class="login-menu">
 				<ul>
-					<li><a href="<?=DN?>/register.php">Register</a></li>
+					<!-- <li><a href="<?=DN?>/register.php">Register</a></li> -->
 				</ul>
 			</div>
 		</div>
@@ -88,10 +88,10 @@
                     <input type="hidden" name="request" value="user_signin">
                      <h5 style="color:red;"><?=Session::get('error') ?></h5>
 									</div>
-									<div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR</div>
-									<div class="input-group mb-0">
+									<!-- <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR</div> -->
+									<!-- <div class="input-group mb-0">
 										<a class="btn btn-outline-primary btn-lg btn-block" href="register.html">Register To Create Account</a>
-									</div>
+									</div> -->
 								</div>
 							</div>
 						</form>
