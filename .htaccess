@@ -75,7 +75,10 @@ RewriteCond %{REQUEST_FILENAME} !-d
  #-----------------------------------------------#
  RewriteRule ^profile(/*)$ index.php?request=settings
 
-
+ #-----------------------------------------------#
+ # PROFILE VUE
+ #-----------------------------------------------#
+ RewriteRule ^profile/vue(/*)$ index.php?request=profile_vue
 
 #-----------------------------------------------#
 # Set ERROR 404 page

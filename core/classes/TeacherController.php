@@ -29,13 +29,12 @@ class TeacherController
 
 		));
 		if($validation->passed()):
-			$TeacherTable          = new \Teacher();
-      $UserTable             = new \User();
+			$AppUsersTable         = new \AppUsers();
 			$Str 					         = new \Str();
 			$_datetime			       = \Config::get('time/date_time');
 			$_ADD                  = (OBJECT)$_ADD;
 
-			$_code                 = $TeacherTable->generateCode();
+			$_code                 = $AppUsersTable->generateCode();
       $_firstname            = $Str->data_in(Str::sanAsName($_ADD->firstname));
       $_lastname             = $Str->data_in(Str::sanAsName($_ADD->lastname));
       $_email                = $Str->data_in(Str::sanAsName($_ADD->email));
@@ -47,42 +46,55 @@ class TeacherController
       $_religion             = $Str->data_in(Str::sanAsName($_ADD->religion));
 			$_nationality          = $Str->data_in(Str::sanAsName($_ADD->nationality));
 
+			# Check if email exists
+			$AppUsersTable->select("WHERE telephone =? AND email =?", Array($_telephone, $_email));
+			if($AppUsersTable->count()):
+				return (OBJECT)[
+					'STATUS' 				=> 0,
+					'ERRORS' 				=> TRUE,
+					'SUCCESS' 			=> FALSE,
+					'ERRORS_SCRIPT' => 'This Email exists already!'
+				];
+			endif;
 
+			$salt 		 				 = Hash::salt(32);
+      $generate_password = 'teacher';
+      $password 				 = Hash::make($generate_password,$salt);
 
 			$_status 			         = 1;
-			$_userID			         = Session::get(Config::get('session/session_name'));
+			$_userID			         = 0;
 
 			$_fields =array(
-				'code'    		      => $_code,
-        'firstname'    			=> $_firstname,
-				'lastname'		 			=> $_lastname,
-				'email'		 				  => $_email,
-        'gender'    			  => $Str->data_in($Str->sanAsName($_ADD->gender)),
-        'birthday'    			=> $_birthday,
-				'address'		 				=> $Str->data_in($Str->sanAsName($_ADD->address)),
-        'qualification'     => $_qualification,
-        'telephone'         => $Str->data_in($_ADD->telephone),
-        'religion'		 			=> $_religion,
-        'profile'		 				=> 'User.png',
-        'nationality'		 		=> $_nationality,
-				'status'            => $_status,
-				'registered_by'     => $_userID,
-				'c_date'						=> $_datetime
+        'user_type_id'    			   => 2,
+				'code'		 			           => $_code,
+				'qualification'		 			   => $_qualification,
+				'religion'		 			       => $_religion,
+				'nationality'		 			     => $_nationality,
+				'birthday'		 				     => $_birthday,
+        'firstname'    			       => $_firstname,
+				'lastname'		 			       => $_lastname,
+				'surname'		 			         => '',
+				'gender'		 			         => $_gender,
+				'email'		 				    		 => $_email,
+				'email_state'		 				   => 0,
+        'telephone'    			       => $_telephone,
+				'address'		 			         => $_address,
+				'profile'		 				       => 'User.png',
+        'last_access'    			     => '0000-00-00',
+				'last_login'		 			   	 => '0000-00-00',
+        'account_session'    		   => 0,
+        'pin'       						 	 => 0,
+        'password'             	   => $password,
+        'salt'		  							 => $salt,
+				'status'		  			 			 => $_status,
+				'admin_id'            		 => $_userID,
+				'registered_by'		 			   => $_userID,
+				'c_date'						 			 => $_datetime
 			);
 
 			if($diagnoArray[0] == 'NO_ERRORS'):
 				try{
-					$TeacherTable = new \Teacher();
-					$TeacherTable->select("WHERE telephone =? AND email =?", Array($_telephone, $_email));
-					if(!$TeacherTable->exists()):
-						$TeacherTable->insert($_fields);
-					else:
-						return (object)[
-							'ERRORS'  			=> true,
-							'SUCCESS' 			=> false,
-							'ERRORS_SCRIPT' => "Impossible d'enregistrer pour la deuxieme fois cet Enseignant!"
-						];
-					endif;
+						$AppUsersTable->insert($_fields);
 				}catch(Exception $e){
 					$diagnoArray[0] = 'ERRORS_FOUND';
 					$diagnoArray[]	= $e->getMessage();
@@ -207,7 +219,7 @@ class TeacherController
 		));
 
 		if($validation->passed()):
-			$TeacherTable      = new \Teacher();
+			$AppUsersTable      = new \AppUsers();
 			$Str 					     = new \Str();
 			$datetime			     = \Config::get('time/date_time');
 			$_DELETE 				   = (OBJECT)$_DELETE;
@@ -217,7 +229,7 @@ class TeacherController
 
 			if($diagnoArray[0] == 'NO_ERRORS'):
 				try{
-					$TeacherTable->delete($_ID);
+					$AppUsersTable->delete($_ID);
 				}catch(Exception $e){
 					$diagnoArray[0] = 'ERRORS_FOUND';
 					$diagnoArray[]	= $e->getMessage();

@@ -18,25 +18,38 @@ require '../core/init.php';
 // $_POST['student-responsable_phone'] = "+250782287842";
 // $_POST['student-religion']          = 'Christian';
 //
-// $_POST['teacher-code']            = "280101032";
+// $_POST['teacher-code']            = "280101076";
 // $_POST['teacher-firstname']       = "Yan";
 // $_POST['teacher-lastname']        = 'Zayd';
-// $_POST['teacher-email']           = 'usooy@gmail.com';
+// $_POST['teacher-email']           = 'papi@gmail.com';
 // $_POST['teacher-gender']          = "Male";
 // $_POST['teacher-address']         = 'Bkv';
 // $_POST['teacher-nationality']     = "Congolaise";
 // $_POST['teacher-qualification']   = "phd";
-// $_POST['teacher-telephone']       = "+2439997600";
-// $_POST['teacher-birthday']        = "1999-08-06";
-// $_POST['teacher-religion']        = "muslim";
+// $_POST['teacher-telephone']       = "+2439997700";
+// $_POST['teacher-birthday']        = "1997-04-02";
+// $_POST['teacher-religion']        = "catholique";
 
 
 // $_POST['class-section']  = "m";
 // $_POST['class-code']  = "999";
 // $_POST['class-id']  = Hash::encryptToken(1);
+// //
+// $_POST['webToken'] = 256;
+// $_POST['request']  = 'teacher-new';
+
+// $_POST['user-firstname'] = 'yan';
+// $_POST['user-lastname'] = 'b';
+// $_POST['user-surname'] = 'bedel';
+// $_POST['user-email'] = 'nyz@gmail.com';
+// $_POST['user-telephone'] = '+2437822442';
+// $_POST['user-address'] = 'rutshuru';
 //
 // $_POST['webToken'] = 256;
-// $_POST['request']  = 'student-new';
+// $_POST['request'] = 'user-update-user-information-profile';
+
+
+
 
 if(Input::checkInput('request', 'post', 1) && Input::checkInput('webToken', 'post', 1)):
   switch (Input::get('request', 'post')):
@@ -129,6 +142,25 @@ if(Input::checkInput('request', 'post', 1) && Input::checkInput('webToken', 'pos
         $response['message'] = $form->ERRORS_SCRIPT;
       endif;
     break;
+    case 'user-update-password':
+  $form = \UserController::updatePassword();
+  if($form->ERRORS == false):
+    $response['status']  = 1;
+    $response['message']  = 'Operation success!';
+  else:
+    $response['status']  = 0;
+    $response['message'] = $form->ERRORS_SCRIPT;
+  endif;
+break;
+case 'user-update-user-information-profile':
+  $form = \UserController::updateInformation();
+  if($form->ERRORS == false):
+    $response['status']  = 1;
+    $response['message']  = 'Operation success!';
+  else:
+    $response['status']  = 0;
+    $response['message'] = $form->ERRORS_SCRIPT;
+  endif;
 
   endswitch;
 

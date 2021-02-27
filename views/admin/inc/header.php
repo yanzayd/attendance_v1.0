@@ -76,7 +76,7 @@
 				<div class="dropdown">
 					<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 						<span class="user-icon">
-							<img <?=DN?>/assets/src="<?=DN?>/assets/vendors/images/<?=$session_user_data->profile?>" alt="">
+							<img src="<?=DN?>/data/profile/<?=$session_user_data->profile ?>" alt="" class="img-thumbnail rounded-circle" id="input_Imagees">
 						</span>
             <?
             $UserTypeTable = new \UserType(); // instanciation of the user type
@@ -92,8 +92,8 @@
             </small>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-						<a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Profile</a>
-						<a class="dropdown-item" href="profile.html"><i class="dw dw-settings2"></i> Setting</a>
+						<a class="dropdown-item" href="<?=DN?>/profile/vue"><i class="dw dw-user1"></i> Profile</a>
+						<a class="dropdown-item" href="<?=DN?>/settings"><i class="dw dw-settings2"></i> Setting</a>
 						<!-- <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a> -->
 						<a class="dropdown-item" href="<?=DN?>/logout"><i class="dw dw-logout"></i> Log Out</a>
 					</div>

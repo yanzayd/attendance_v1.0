@@ -22,7 +22,7 @@ class UserController
 				'required' => true
 			),
 			'lastname' => array(
-				'name'     => 'Last Name',
+				'name'     => 'Last Names',
 				'string'   => true,
 				'required' => true
 			),
@@ -46,34 +46,30 @@ class UserController
 			$_userTypeID = $Str->data_in($_SIGNUP->user_type);
 			$_firstname  = $Str->data_in($Str->sanAsName($_SIGNUP->firstname));
 			$_lastname   = $Str->data_in($Str->sanAsName($_SIGNUP->lastname));
-			$_gender     = $Str->data_in($Str->sanAsName($_SIGNUP->gender));
-		  $_email 		 = $Str->data_in($_SIGNUP->email);
+			$_surname    = $Str->data_in($Str->sanAsName($_SIGNUP->surname));
 			$_telephone  = $Str->data_in($_SIGNUP->telephone);
-			$_address    = $Str->data_in($Str->sanAsLabel($_SIGNUP->address));
+			$_email 		 = $Str->data_in($_SIGNUP->email);
+
+			$_memberSinceDate = $Str->data_in($_SIGNUP->member_since_date);
 
 		  $salt 		 				 = Hash::salt(32);
-		  $generate_password = 'attendance';
+		  $generate_password = 'user';
 		  $password 				 = Hash::make($generate_password,$salt);
 
-			$_userID = $session_user_data->id;
-
-			$picture = 'user.jpg';
-			if ($_gender == 'Female') {
-				$picture = 'picture.jpg';
-			} else {
-				$picture = 'user.png';
-			}
-
-			$_user_status = 1;
-
+			$_userID = 1;
+			$_status = 0;
 			$_fields = array(
-				'first_name'				=> $_firstname,
-				'last_name'					=> $_lastname,
-				'gender'						=> $_gender,
+				'member_code' 			=> $UserTable->generateCode(),
+				'firstname'					=> $_firstname,
+				'lastname'					=> $_lastname,
+				'surname'		  			=> $_surname,
+				'gender'						=> $Str->data_in($Str->sanAsName($_SIGNUP->gender)),
 				'email'							=> $_email,
+				'email_state'		  	=> 0,
 				'telephone'					=> $_telephone,
-				'address'						=> $_address,
-				'profile'		  			=> $picture,
+				'address'						=> $Str->data_in($Str->sanAsLabel($_SIGNUP->address)),
+				'profile'		  			=> 'User.png',
+				'member_since_date' => $_memberSinceDate,
 				'user_type_id'		  => $_userTypeID,
 				'last_access'		    => '0000-00-00',
 				'last_login'		    => '0000-00-00',
@@ -81,8 +77,8 @@ class UserController
 				'pin'							  => 0,
 				'password'				  => $password,
 				'salt'		  				=> $salt,
-				'added_by'					=> $_userID,
-				'status'		  			=> $_user_status,
+				'admin_id'					=> $_userID,
+				'status'		  			=> $_status,
 				'c_date'		 		  	=> $datetime
 			);
 		  if($diagnoArray[0] == 'NO_ERRORS'){
@@ -93,11 +89,43 @@ class UserController
 								return (object)[
 									'ERRORS'=>true,
 									'SUCCESS'=>false,
-									'ERRORS_SCRIPT' => 'Email Already Used!'
+									'ERRORS_SCRIPT' => 'Un autre Member utilise deja cet adresse E-mail!'
 								];
 							else:
 								$UserTable->insert($_fields);
-								Redirect::to(DN._.'list/users');
+
+
+								$Email = new \Email();
+
+								$_POST['email'] = 'ezechielkalengya@gmail.com';
+								$_POST['fname'] = 'Kalengya';
+								$_POST['lname'] = 'Ezpk';
+								$psw            = $_POST['fname'].'@2020solglobal';
+
+								//send email
+								$_contacts['fromEmail']    = 'admin@ideashop.rw';
+								$_contacts['fromName']     = 'International Ideashop [KBAN]';
+								$_contacts['replyToEmail'] = 'admin@ideashop.rw';
+								$_contacts['replyToName']  ='International Ideashop [KBAN]';
+								$_contacts['toEmail']      = $_POST['email'];
+								$_contacts['toName']       = $_POST['fname'].' '.$_POST['lname'];
+								$_subject                  = 'Creation of Administraion\'s Account';
+								$_body                     = '<div style="background: #e5ebf0; color: black; padding: 20px; font-size: 14px; font-family: serif;">
+								                      <h1 style="color: black;"> <strong>KBAN</strong> </h1>
+								                      <h3 style="color: black;"> <span style="color: gray;"> Hello dear, </span> <strong> '.$_POST['fname'].' ! </strong> </h3>
+								                      <p style="color: black;"> Your Account as Administrator to Kban International Ideashop has been created successfully <br/>
+								                      use the credentials to access your account : </p>
+								                      <ul>
+								                       <li>- Email : '. $_POST['email'].' </li>
+								                       <li>- Default Password : ' .$psw.' </li>
+								                       <li>- System Url : <a style="text-decoration: none; color: #367fa9;" href="https://admin.ideashop.rw"> admin.ideashop.rw </a></li>
+								                      </ul>
+								                      <h5>Regards, for any question email:  admin@ideashop.rw !</h5>
+								                      </p>
+								              </div>';
+
+								$Email->send($_contacts, $_subject, $_body);
+
 							endif;
 						}catch(Exeption $e){
 							$diagnoArray[0] = "ERRORS_FOUND";
@@ -144,8 +172,13 @@ class UserController
 				'required' => true
 			),
 			'lastname' => array(
-				'name'     => 'Last Name',
+				'name'     => 'Last Names',
 				'string'   => true,
+				'required' => true
+			),
+			'email' => array(
+				'name' => 'Email Address',
+				'email' => true,
 				'required' => true
 			),
 			'telephone' => array(
@@ -163,80 +196,34 @@ class UserController
 			$_ID 				 = Session::get(Config::get('session/session_name'));
 			$_firstname  = $Str->data_in($Str->sanAsName($_SIGNUP->firstname));
 			$_lastname   = $Str->data_in($Str->sanAsName($_SIGNUP->lastname));
+			$_surname    = $Str->data_in($Str->sanAsName($_SIGNUP->surname));
 			$_telephone  = $Str->data_in($_SIGNUP->telephone);
+			$_email 		 = $Str->data_in($_SIGNUP->email);
+			$_address    = $Str->data_in($Str->sanAsName($_SIGNUP->address));
 
 			$_userID = 1;
 			$_status = 0;
 			$_fields = array(
-				'first_name'					=> $_firstname,
-				'last_name'					  => $_lastname,
-				'telephone'				  	=> $_telephone,
-				'address'						  => $Str->data_in($Str->sanAsLabel($_SIGNUP->address))
+				'firstname'					=> $_firstname,
+				'lastname'					=> $_lastname,
+				'surname'		  			=> $_surname,
+				'email'							=> $_email,
+				'telephone'					=> $_telephone,
+				'address'						=> $_address,
 			);
 		  if($diagnoArray[0] == 'NO_ERRORS'){
 					  try{
+							$UserTable = new \User();
+							$UserTable->select("WHERE email =? AND id !=? ", Array($_email, $_ID));
+							if($UserTable->count()):
+								return (object)[
+									'ERRORS'=>true,
+									'SUCCESS'=>false,
+									'ERRORS_SCRIPT' => 'Un autre Member utilise deja cet adresse E-mail!'
+								];
+							else:
 								$UserTable->update($_fields, $_ID);
-						}catch(Exeption $e){
-							$diagnoArray[0] = "ERRORS_FOUND";
-							$diagnoArray[] = $e->getMessage();
-						}
-				}
-			}else{
-				$diagnoArray[0] = 'ERRORS_FOUND';
-				$error_msg = ul_array($validation->errors());
-			}
-			if($diagnoArray[0] == 'ERRORS_FOUND'){
-				return (object)[
-					'ERRORS'=>true,
-					'SUCCESS'=>false,
-					'ERRORS_SCRIPT' => $validate->getErrorLocation()
-				];
-			}else{
-				return (object)[
-					'ERRORS'=>false,
-					'SUCCESS'=>true,
-					'ERRORS_SCRIPT' => $validate->errors()
-				];
-			}
-	}
-
-	public static function activateUser(){
-		$diagnoArray[0] = 'NO_ERRORS';
-		$validate = new \Validate();
-		$prfx = 'user-';
-		foreach($_POST as $index=>$val){
-			$ar = explode($prfx,$index);
-			if(count($ar)){
-				$_SIGNUP[end($ar)] = $val;
-			}
-		}
-
-		$validation = $validate->check($_SIGNUP, array(
-			'id' => array(
-				'name'     => 'User ID'
-			)
-		));
-
-		if($validation->passed()){
-			$UserTable = new \User();
-			$Str 			 = new \Str();
-			$datetime  = \Config::get('time/date_time');
-			$_SIGNUP   = (object)$_SIGNUP;
-
-			$_ID 		   = $Str->data_in($_SIGNUP->id);
-			$_status   = $Str->data_in($_SIGNUP->status);
-			$_user_status = 0;
-			if ($_status == 0) {
-				$_user_status = 1;
-			}else {
-				$_user_status = 0;
-			}
-			$_fields = array(
-				'status'					=> $_user_status
-			);
-		  if($diagnoArray[0] == 'NO_ERRORS'){
-					  try{
-								$UserTable->update($_fields, $_ID);
+							endif;
 						}catch(Exeption $e){
 							$diagnoArray[0] = "ERRORS_FOUND";
 							$diagnoArray[] = $e->getMessage();
@@ -285,6 +272,7 @@ class UserController
         $validation = $validate->check($_SIGNUP, array(
             'password' => array(
                 'name' => 'Password',
+                // 'strong_password' => true,
                 'min' => 6,
                 'required' => true
             ),
@@ -302,7 +290,7 @@ class UserController
 
         if($current_password != $user_data->password){
             $diagnoArray[0]  == 'ERRORS_FOUND';
-            $errors_str      = "The current password is Incorrect";
+            $errors_str      = "Le Mot de Passe actuel est incorrect!";
 						return (object)[
                 'ERRORS'=>true,
                 'ERRORS_STRING' => $errors_str,
@@ -311,7 +299,7 @@ class UserController
         }
 				elseif($_SIGNUP->password != $_SIGNUP->repassword){
             $diagnoArray[0] == 'ERRORS_FOUND';
-            $errors_str     = "The two passwords must match and the length must be greater than Six characters!";
+            $errors_str     = "Les deux Mots de Passe ne correspondent pas!";
 						return (object)[
                 'ERRORS'=>true,
                 'ERRORS_STRING' => $errors_str,

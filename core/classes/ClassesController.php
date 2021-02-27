@@ -136,6 +136,8 @@ class ClassesController
 				'name' 		   => $_name,
 				'code' 		   => $_code,
 				'section'    =>$_section,
+				'created_by' =>$_userID,
+				'c_date'     =>$_datetime,
 
 			);
 

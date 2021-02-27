@@ -13,7 +13,7 @@ if($StudentTable->count()):
 				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30" id="card-<?= Hash::encryptToken($student_->id)?>">
 					<div class="pd-20 card-box height-100-p">
 						<div class="profile-photo">
-							<img src="<?=DN?>/assets/vendors/images/photo1.jpg" alt="" class="avatar-photo">
+							<img src="<?=DN?>/assets/vendors/images/studentIcon.png" alt="" class="avatar-photo">
 							<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">

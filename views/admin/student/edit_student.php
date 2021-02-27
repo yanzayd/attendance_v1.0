@@ -26,7 +26,7 @@ endif;
 							<h4 class="text-blue h4">Edit Student</h4>
 						</div>
 					</div>
-					<form method="post" id="simpleForm" enctype="multipart/form-data" >
+					<form method="post" id="profile-info" enctype="multipart/form-data" >
             <div class="row">
 							<div class="col-md-4 col-sm-12">
                 <div class="form-group">
@@ -134,8 +134,10 @@ endif;
 								</div>
 							</div>
             </div>
+            <input type="hidden" name="request" value="user-new">
+            <input type="hidden" name="webToken" value="256">
 						<button type="reset" class="btn btn-secondary waves-effect">Cancel</button>
-	 					<button type="button" style="Background: #2A3F54" class="btn btn-success SubmitRegister">Save</button>
+	 					<button type="button" style="Background: #2A3F54" class="btn btn-success SubmitUpdateInformation">Save</button>
 					</form>
 				</div>
 			</div>

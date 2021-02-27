@@ -159,7 +159,7 @@ $UserTypeTable = new UserType();
 if($session_user->isLoggedIn()){
 	$session_user_data = $session_user->data();
 	$session_user_ID   = $session_user_data->id;
-  $main_             = $UserTypeTable->find($session_user_data->user_type_id, 'id')==1?'admin/':'user/';
+  $main_             = $UserTypeTable->find($session_user_data->user_type_id, 'id')==1?'admin/':'teacher/';
 }
 
 ?>

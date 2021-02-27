@@ -3,17 +3,17 @@
 		<div class="min-height-200px">
 			<div class="row">
 				<?php
-		$TeacherTable = new \Teacher();
-		$UserTable    = NEW \User();
-		$TeacherTable->select("WHERE status != 501 ORDER BY code ASC");
-		if($TeacherTable->count()):
-			foreach($TeacherTable->data() As $teacher_):
-				$teacher_code = $TeacherTable->find($teacher_->code, 'name');
+		$AppUsersTable = new \AppUsers();
+		$UserTable = new \User();
+		$AppUsersTable->select("WHERE status != 501 ORDER BY code ASC");
+		if($AppUsersTable->count()):
+			foreach($AppUsersTable->data() As $teacher_):
+				$teacher_code = $AppUsersTable->find($teacher_->code, 'name');
 		 ?>
 				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30" id="card-<?= Hash::encryptToken($teacher_->id)?>">
 					<div class="pd-20 card-box height-100-p">
 						<div class="profile-photo">
-							<img src="<?=DN?>/assets/vendors/images/photo1.jpg" alt="" class="avatar-photo">
+							<img src="<?=DN?>/assets/vendors/images/teacherIcon.jpeg" alt="" class="avatar-photo">
 							<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
